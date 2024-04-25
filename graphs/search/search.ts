@@ -1,5 +1,6 @@
-import {UGraphNodeStr} from "../graph/graph";
-import {StackStr} from "../common/stack";
+import { UGraphNodeStr } from "../graph/graph";
+import { StackStr, Stack } from "../common/stack";
+import { Queue } from "../common/queue";
 
 /** Return array of nodes, in DFS order (recursive version)  */
 
@@ -28,19 +29,69 @@ function rDfs(
   return result;
 }
 
-// 1. Set up a Stack
-//const toVisit = new StackStr([start.value]);
 
 /** Return array of nodes, in DFS order (iterative version)  */
 
 function iDfs(start: UGraphNodeStr): string[] {
-  return ["todo"];
+  console.log('started');
+  // init a stack
+  // check start's adjacents
+  // create set
+  // if the adjacents are not in the set, add them
+  // return set's values
+  let nodeStack = new Stack([start]);
+  let visited: Set<string> = new Set();
+  let current;
+
+  while (!nodeStack.isEmpty()) {
+    console.log('node srtack before pop', nodeStack)
+    current = nodeStack.pop();
+    // console.log(current.adjacent);
+    for (let adj of current.adjacent) {
+      if (!visited.has(adj.value)) {
+        nodeStack.push(adj);
+      }
+
+    }
+    visited.add(current.value);
+  }
+
+  let result = [];
+  for (let value of visited) {
+    result.push(value);
+  }
+  return result;
 }
 
 /** Return array of nodes, in BFS order (iterative version)  */
 
 function bfs(start: UGraphNodeStr): string[] {
-  return ["todo"];
+  let nodeQueue = new Queue([start]);
+  let visited: Set<string> = new Set();
+  let current;
+
+  while (!nodeQueue.isEmpty()) {
+    console.log('node queue before dequeue', nodeQueue)
+    current = nodeQueue.dequeue();
+    // console.log(current.adjacent);
+    for (let adj of current.adjacent) {
+      if (!visited.has(adj.value)) {
+        nodeQueue.enqueue(adj);
+        // visited = [b, a, c, d]
+        // 'b-c-d-a' when visited is added to here this is what we get
+        // visited.add(adj.value);
+      }
+
+    }
+    // visited = [a, b, c, d]
+    visited.add(current.value);
+  }
+
+  let result = [];
+  for (let value of visited) {
+    result.push(value);
+  }
+  return result;
 }
 
-export {iDfs, rDfs, bfs};
+export { iDfs, rDfs, bfs };
