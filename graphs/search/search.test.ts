@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
-import { UGraphStr } from "../common/graph";
-import { bfs, iDfs, rDfs } from "./search";
+import {describe, expect, it} from "vitest";
+import {UGraphStr} from "../common/graph";
+import {bfs, iDfs, rDfs} from "./search";
 
 describe("DFS", function () {
   it.each([
@@ -11,8 +11,13 @@ describe("DFS", function () {
     //     \------------/
     const graph = new UGraphStr();
     const [a, b, c, d] = graph.addFromVals(["a", "b", "c", "d"]);
-    graph.addEdges([[d, b], [b, a], [a, c], [c, d]]);
-    const rez = rDfs(a).join("-");
+    graph.addEdges([
+      [d, b],
+      [b, a],
+      [a, c],
+      [c, d],
+    ]);
+    const rez = fn(a).join("-");
     expect(["a-b-d-c", "a-c-d-b"]).toContain(rez);
   });
 });
@@ -24,8 +29,13 @@ describe("BFS", function () {
 
     const graph = new UGraphStr();
     const [a, b, c, d] = graph.addFromVals(["a", "b", "c", "d"]);
-    graph.addEdges([[d, b], [b, a], [a, c], [c, d]]);
+    graph.addEdges([
+      [d, b],
+      [b, a],
+      [a, c],
+      [c, d],
+    ]);
     const rez = bfs(a).join("-");
-    expect([ "a-b-c-d", "a-c-b-d" ]).toContain(rez);
+    expect(["a-b-c-d", "a-c-b-d"]).toContain(rez);
   });
 });
